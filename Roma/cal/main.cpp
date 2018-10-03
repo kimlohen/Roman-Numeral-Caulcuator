@@ -9,7 +9,7 @@ using namespace std;
 *@since 2017.09.13
 */
 
-int convert(char letter) { //Convert from roman to numeric (로마자에서 숫자로 변환) 
+int convert(char letter) { // Convert from roman to numeric (로마자에서 숫자로 변환) 
 	if (letter == 'I') { // I = 1, V = 5, X = 10, L = 50, C  =100 D = 500, M = 1000, Z = 0
 		return 1;
 	}
@@ -39,12 +39,12 @@ int convert(char letter) { //Convert from roman to numeric (로마자에서 숫자로 변
 	}
 }
 
-int isValid(char *str) { //Determine it it is a valid symbol (유효한 기호인지 판단)
+int isValid(char *str) { // Determine it it is a valid symbol (유효한 기호인지 판단)
 	if (*str == 'I' || *str == 'V' || *str == 'X' || *str == 'L' || *str == 'C' || *str == 'D' || *str == 'M' || *str == 'Z') { 
-		return 1; //Returns 1 if it is a Roman numeral (로마자인 경우 1을 반환)
+		return 1; // Returns 1 if it is a Roman numeral (로마자인 경우 1을 반환)
 	}
 	if (*str == '+' || *str == '-' || *str == '*' || *str == '/' || *str == '\0') { 
-		return 2;//Returns 2 if it is a space or arithmetic operator (공백과 산술연산자인 경우 2를 반환)
+		return 2;// Returns 2 if it is a space or arithmetic operator (공백과 산술연산자인 경우 2를 반환)
 	}
 	return 0;// Returns 0 if it is a invalid symbol(유효한 기호가 아닐 시 0을 반환)
 }
@@ -159,16 +159,16 @@ int main()
 	string str;
 
 	/**
-	*@param num Number of expressions to be received (받게될 식들의 수)
-	*@param count Counter of string (문자열의 계수)
-	*@param result Program result (좌항의 식을 프로그램이 계산한 값)
-	*@param pre Value of the preceding character in the string when comparing Roman letters (로마자 비교시 문자열에서 앞의 문자의 값)
-	*@param post Value of the following character in the string when comparing Roman letters (로마자 비교시 문자열에서 뒤의 문자의 값)
-	*@param temp Temporary variable (임시 용도 변수)
-	*@param escape Loop escape variable (반복문 탈출 용도의 변수)
-	*@param resultC Sinrg of the left hand value (좌항의 값이 변환된 문자열)
-	*@param awnswerC String of the right hand value (우항의 값이 변환된 문자열)
-	*@param str String to be used(사용할 문자열)
+	*@param int $num Number of expressions to be received (받게될 식들의 수)
+	*@param int $count Counter of string (문자열의 계수)
+	*@param int $result Program result (좌항의 식을 프로그램이 계산한 값)
+	*@param int $pre Value of the preceding character in the string when comparing Roman letters (로마자 비교시 문자열에서 앞의 문자의 값)
+	*@param int $post Value of the following character in the string when comparing Roman letters (로마자 비교시 문자열에서 뒤의 문자의 값)
+	*@param int $temp Temporary variable (임시 용도 변수)
+	*@param int $escape Loop escape variable (반복문 탈출 용도의 변수)
+	*@param char $resultC Sinrg of the left hand value (좌항의 값이 변환된 문자열)
+	*@param char $awnswerC String of the right hand value (우항의 값이 변환된 문자열)
+	*@param string $str String to be used(사용할 문자열)
 	*/
 
 	cin >> num; // Number of test cases (첫번째 입력값, 테스트 케이스의 개수)
@@ -244,6 +244,12 @@ int main()
 				count = 0;
 			}
 
+			if (str[count + 1] != '\0' && isValid(&str[count + 1]) == 2) {
+				while (isValid(&str[count]) == 2) {
+					count++;
+				}
+			}	//연산자가 연속해서 나오는 경우 예외처리 ex) II ++* IV 의 경우 계산 결과를 0으로 초기화한다.
+
 			if (str[count] == '+') {
 				if (str[count + 1] == '\0') { // 연산자와 숫자 사이 띄어쓰기 시 다시 받아옴
 					cin >> str;
@@ -296,7 +302,7 @@ int main()
 					}
 
 					//cout << temp << endl; 
-					//로마 숫자 변환 테스트
+					// 로마 숫자 변환 테스트
 				}
 
 				if (range(temp) == 0) { // 현재 계산중인 숫자가 로마숫자 범위 밖이면 0으로 처리
